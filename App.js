@@ -6,6 +6,7 @@ import {
 } from './src/Utils/notificationService';
 import ForgroundHandler from './src/Utils/foregroundService';
 import Home from './src/Screens/Home';
+import Navigator from './src/Components/Navigator';
 
 const App = () => {
   useEffect(() => {
@@ -13,11 +14,7 @@ const App = () => {
     notificationListener();
   }, []);
 
-  return (
-    <View>
-      <Home />
-    </View>
-  );
+  return <Navigator />;
 };
 
 export default App;
