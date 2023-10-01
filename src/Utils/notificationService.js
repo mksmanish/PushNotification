@@ -1,6 +1,7 @@
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import notifee, {AndroidImportance} from '@notifee/react-native';
+import navigationService from '../Components/navigationService';
 
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -63,7 +64,8 @@ async function onDisplayNotification(remoteMessage) {
 
 export const notificationListener = async () => {
   const subscribe = messaging().onMessage(async remoteMessage => {
-    onDisplayNotification(remoteMessage);
+    // onDisplayNotification(remoteMessage);
+    // navigationService.navigate('Details');
   });
 
   messaging().onNotificationOpenedApp(remoteMessage => {
@@ -71,6 +73,9 @@ export const notificationListener = async () => {
       'Notification caused app to open from background state:',
       remoteMessage.notification,
     );
+    setTimeout(() => {
+      navigationService.navigate('Details');
+    }, 1200);
   });
 
   // messaging().onMessage(async remoteMessage => {

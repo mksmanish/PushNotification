@@ -110,6 +110,7 @@ import {
   Text,
   FlatList,
   Image,
+  StatusBar,
 } from 'react-native';
 
 // create a component
@@ -125,7 +126,7 @@ const Home = ({navigation}) => {
       const res = await axios['get']('https://dummyapi.io/data/v1/user', {
         headers,
       });
-      console.log('res==>>>>', res);
+      //  console.log('res==>>>>', res);
       setUsers(res.data.data);
     } catch (error) {
       console.log('erro riased', error);
@@ -151,9 +152,8 @@ const Home = ({navigation}) => {
   return (
     <View style={styles.container}>
       <SafeAreaView style={{marginHorizontal: 24}}>
-        <Text style={{...styles.nameText, alignSelf: 'center'}}>
-          All Users{' '}
-        </Text>
+        <StatusBar />
+        <Text style={{...styles.nameText, alignSelf: 'center'}}>All Users</Text>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={usersData}

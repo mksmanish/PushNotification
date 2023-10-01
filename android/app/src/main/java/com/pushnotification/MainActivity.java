@@ -27,6 +27,7 @@ public class MainActivity extends ReactActivity {
     return "PushNotification";
   }
 
+
   @Override
   protected  void onCreate(Bundle savedInstanceState){
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
