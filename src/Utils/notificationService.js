@@ -1,5 +1,6 @@
 import messaging from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import notifee, {AndroidImportance} from '@notifee/react-native';
 
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -30,7 +31,41 @@ const generateFcmToken = async () => {
   }
 };
 
+async function onDisplayNotification(remoteMessage) {
+  const {notification, messageId} = remoteMessage;
+  const channelId = await notifee.createChannel({
+    id: 'default6',
+    name: 'Default Channel 6',
+    sound: 'default',
+    importance: AndroidImportance.HIGH,
+  });
+
+  notifee.displayNotification({
+    title: notification.title,
+    subtitle: '&#129395;',
+    body: notification.body,
+    android: {
+      channelId,
+      color: '#4caf50',
+      actions: [
+        {
+          title: '<b>Dance</b> &#128111;',
+          pressAction: {id: 'dance'},
+        },
+        {
+          title: '<p style="color: #f44336;"><b>Cry</b> &#128557;</p>',
+          pressAction: {id: 'cry'},
+        },
+      ],
+    },
+  });
+}
+
 export const notificationListener = async () => {
+  const subscribe = messaging().onMessage(async remoteMessage => {
+    onDisplayNotification(remoteMessage);
+  });
+
   messaging().onNotificationOpenedApp(remoteMessage => {
     console.log(
       'Notification caused app to open from background state:',
@@ -38,9 +73,9 @@ export const notificationListener = async () => {
     );
   });
 
-  messaging().onMessage(async remoteMessage => {
-    console.log('getting  foreground', remoteMessage);
-  });
+  // messaging().onMessage(async remoteMessage => {
+  //   console.log('getting  foreground', remoteMessage);
+  // });
   // Check whether an initial notification is available
   messaging()
     .getInitialNotification()

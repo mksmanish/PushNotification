@@ -4,6 +4,8 @@ import {
   requestUserPermission,
   notificationListener,
 } from './src/Utils/notificationService';
+import ForgroundHandler from './src/Utils/foregroundService';
+import Home from './src/Screens/Home';
 
 const App = () => {
   useEffect(() => {
@@ -13,7 +15,7 @@ const App = () => {
 
   return (
     <View>
-      <Text>App</Text>
+      <Home />
     </View>
   );
 };
